@@ -15,7 +15,8 @@ import pandas as pd
 import PyPDF2
 from langchain_google_genai import ChatGoogleGenerativeAI
 import math
-import pyttsx3
+from gtts import gTTS
+import tempfile
 
 # Load environment variables
 load_dotenv()
@@ -30,7 +31,6 @@ embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-
 # Load the Whisper processor and model
 processor = WhisperProcessor.from_pretrained("openai/whisper-tiny")
 model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-tiny")
-
 
 # Initialize Pinecone
 index_name = "rag01"
@@ -173,26 +173,21 @@ if st.session_state.embeddings_created:
                 st.write(response["result"])
 
                 try:
-                    # Initialize the pyttsx3 engine
-                    engine = pyttsx3.init()
+                    # Generate TTS audio using gTTS
+                    tts = gTTS(response["result"])
+                    
+                    # Create a temporary file to store the audio
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmpfile:
+                        temp_path = tmpfile.name
+                        tts.save(temp_path)
 
-                    # Get the list of available voices
-                    voices = engine.getProperty('voices')
+                    # Play audio in Streamlit
+                    st.audio(temp_path, format="audio/mp3")
 
-                    # Set the voice to a female/male voice (this may vary depending on your system)
-                    engine.setProperty('voice', voices[1].id)  # Change the index to select a different voice
-
-                    # Save the speech audio to a file (response_audio.mp3)
-                    audio_file_path = "response_audio.mp3"
-                    engine.save_to_file(response, audio_file_path)  # Save speech to mp3
-                    engine.runAndWait()
-                    st.audio(audio_file_path, format="audio/mp3")
-                    os.remove(audio_file_path)
+                    # Optionally clean up the temporary file
+                    os.remove(temp_path)
 
                 except Exception as e:
-                    print(f"An error occurred: {e}")
-
-                except Exception as e:
-                    st.error(f"An error occurred while generating the audio: {e}")
+                    st.error(f"Error during TTS conversion: {e}")
             else:
                 st.error("No context available for querying.")
