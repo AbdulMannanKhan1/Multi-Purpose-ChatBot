@@ -1,7 +1,7 @@
 from libraries import *
 from functions import *
 from pinecone_setup import setup
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
 
 
 # Initialize model and embeddings
