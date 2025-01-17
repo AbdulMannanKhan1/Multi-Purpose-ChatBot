@@ -1,8 +1,3 @@
-# import librosa
-# from langchain_community.document_loaders import SeleniumURLLoader
-# import pandas as pd
-# import PyPDF2
-# import math
 from libraries import math, PyPDF2, librosa, SeleniumURLLoader, pd
 
 # Functions for file processing

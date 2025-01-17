@@ -1,29 +1,21 @@
 from libraries import *
 from functions import *
-from pinecone_setup import setup
-# from langchain_groq import ChatGroq
-
+from pinecone_setup import setup 
 
 # Initialize model and embeddings
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp")
-# # llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-002")
-# llm = ChatGroq(model="llama-3.3-70b-versatile")
-
 embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
 # Load the Whisper processor and model
 processor = WhisperProcessor.from_pretrained("openai/whisper-tiny")
 model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-tiny")
 
-
 index = setup()
 vector_store = PineconeVectorStore(embedding=embeddings, index=index)
 retriever = vector_store.as_retriever(search_kwargs={"k": 5})
 
-
 # Streamlit app
 st.title("Multi-Purpose RAG Chatbot")
-
 
 # Handle state reset on new data
 if "current_data_type" not in st.session_state:
@@ -109,8 +101,9 @@ if st.session_state.embeddings_created:
         with st.spinner('Retrieving response...'):
             if "text_data" in st.session_state and st.session_state.text_data:
                 
-                qa_chain = RetrievalQA.from_chain_type(llm=llm, chain_type="refine",
+                qa_chain = RetrievalQA.from_chain_type(llm=llm, chain_type="map_reduce",
                                                        retriever=retriever)
+                print(query)
                 response = qa_chain.invoke(query)
                 # Display the response text
                 st.subheader("Result:")
