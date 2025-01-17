@@ -40,6 +40,7 @@ google-auth-httplib2==0.2.0
 google-generativeai==0.8.3
 googleapis-common-protos==1.66.0
 greenlet==3.1.1
+groq==0.15.0
 grpcio==1.69.0
 grpcio-status==1.69.0
 gTTS==2.5.4
@@ -63,6 +64,7 @@ langchain==0.3.14
 langchain-community==0.3.14
 langchain-core==0.3.29
 langchain-google-genai==2.0.8
+langchain-groq==0.2.3
 langchain-huggingface==0.1.2
 langchain-openai==0.2.14
 langchain-pinecone==0.2.0
@@ -100,6 +102,7 @@ pinecone-client==5.0.1
 pinecone-plugin-inference==1.1.0
 pinecone-plugin-interface==0.0.7
 platformdirs==4.3.6
+playwright==1.49.1
 pooch==1.8.2
 propcache==0.2.1
 proto-plus==1.25.0
@@ -113,6 +116,7 @@ pydantic==2.9.2
 pydantic-settings==2.7.1
 pydantic_core==2.23.4
 pydeck==0.9.1
+pyee==12.0.0
 Pygments==2.19.1
 pyparsing==3.2.1
 pypdf==5.1.0
@@ -171,6 +175,4 @@ watchdog==6.0.0
 webencodings==0.5.1
 websocket-client==1.8.0
 wrapt==1.17.0
-wsproto==1.2.0
-xxhash==3.5.0
-yarl==1.18.3
+wsproto==1

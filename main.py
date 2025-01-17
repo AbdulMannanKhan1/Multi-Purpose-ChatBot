@@ -1,5 +1,6 @@
 from libraries import *
 from functions import *
+from functions import process_url_unstructured
 from pinecone_setup import setup 
 
 # Initialize model and embeddings
@@ -73,7 +74,8 @@ if uploaded_data and not st.session_state.embeddings_created:
             elif data_name == "uploaded_text":
                 st.session_state.text_data = process_text_file(uploaded_data)
             elif data_name == "entered_url":
-                st.session_state.text_data = process_url(uploaded_data)
+                # st.session_state.text_data = process_url(uploaded_data)
+                st.session_state.text_data = process_url_unstructured(uploaded_data)
                 if not st.session_state.text_data:
                     st.error("Failed to load URL content.")
                     st.stop()

@@ -1,4 +1,5 @@
 from libraries import math, PyPDF2, librosa, SeleniumURLLoader, pd
+from langchain_community.document_loaders import UnstructuredURLLoader
 
 # Functions for file processing
 def process_csv(file):
@@ -19,6 +20,12 @@ def process_url(url):
     loader = SeleniumURLLoader(urls=[url])
     data = loader.load()
     return data[0].page_content if data else None
+
+# Async function for processing URL
+def process_url_unstructured(url):
+    loader = UnstructuredURLLoader(urls=[url])
+    data = loader.load()
+    return data[0].page_content
 
 def process_audio(file, processor, model):
     audio_array, sampling_rate = librosa.load(file, sr=16000)
